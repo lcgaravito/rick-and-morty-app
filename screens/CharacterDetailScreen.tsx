@@ -76,6 +76,7 @@ export default CharacterDetailScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    marginBottom: 20,
   },
   loading: {
     flex: 1,

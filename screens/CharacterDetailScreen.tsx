@@ -30,7 +30,6 @@ const CharacterDetailScreen = ({ route }: CharacterDetailScreenProps) => {
   };
 
   useEffect(() => {
-    console.log(route.params.url);
     fetchData();
   }, []);
 

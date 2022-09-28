@@ -4,7 +4,7 @@ React native app that uses the Rick and morty API
 
 This app is written with typescript, uses external fonts and use navigation routes with React Navigation, where depending on the screen an http call is made to an API based on the popular Rick And Morty series.
 
-[Application wireframe diagram 📝📐](https://github.com/lcgaravito/easy-notes/tree/main/wireframe)
+[Application wireframe diagram 📝📐](https://github.com/lcgaravito/rick-and-morty-app/tree/main/wireframe)
 
 ### Portrait Screenshots 📱
 

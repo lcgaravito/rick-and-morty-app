@@ -6,6 +6,8 @@ This app is written with typescript, uses external fonts and use navigation rout
 
 [Application wireframe diagram 📝📐](https://github.com/lcgaravito/rick-and-morty-app/tree/main/wireframe)
 
+The official Rick and Morty API website is located at [rickandmortyapi.com](https://rickandmortyapi.com/)
+
 ### Portrait Screenshots 📱
 
 <div style="display: flex; flex-wrap: wrap;">

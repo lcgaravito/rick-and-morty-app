@@ -5,6 +5,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { BottomTabParamList } from "./BottomTabParamList";
 import CharactersNavigator from "./CharactersNavigator";
 import LocationsNavigator from "./LocationsNavigator";
+import { Platform } from "react-native";
 
 const BottomTabs = createBottomTabNavigator<BottomTabParamList>();
 
@@ -17,6 +18,10 @@ const BottomTabNavigator = () => {
         tabBarLabelStyle: {
           fontFamily: "SpaceMono",
           color: COLORS.primary,
+          marginBottom: Platform.OS === "android" ? 5 : 0,
+        },
+        tabBarStyle: {
+          backgroundColor: COLORS.grayDark,
         },
       }}
     >

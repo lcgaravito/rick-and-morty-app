@@ -1,4 +1,4 @@
-export type RootStackParamList = {
+export type CharactersStackParamList = {
   Characters: undefined;
   CharacterDetail: {
     name: string;

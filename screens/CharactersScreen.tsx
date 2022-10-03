@@ -8,13 +8,13 @@ import {
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { RootStackParamList } from "../navigation";
-import { Card, CharacterItem } from "../components";
+import { CharactersStackParamList } from "../navigation";
+import { CharacterItem } from "../components";
 import { Character } from "../types";
 import { COLORS } from "../constants/COLORS";
 
 type CharactersScreenProps = NativeStackScreenProps<
-  RootStackParamList,
+  CharactersStackParamList,
   "Characters"
 >;
 
@@ -102,7 +102,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    marginBottom: 20,
   },
   pagination: {
     flexDirection: "row",

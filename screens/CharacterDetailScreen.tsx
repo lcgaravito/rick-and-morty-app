@@ -8,13 +8,13 @@ import {
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { RootStackParamList } from "../navigation";
+import { CharactersStackParamList } from "../navigation";
 import { CharacterDetail } from "../types";
 import { COLORS } from "../constants/COLORS";
 import { Card } from "../components";
 
 type CharacterDetailScreenProps = NativeStackScreenProps<
-  RootStackParamList,
+  CharactersStackParamList,
   "CharacterDetail"
 >;
 

@@ -6,6 +6,7 @@ import { BottomTabParamList } from "./BottomTabParamList";
 import CharactersNavigator from "./CharactersNavigator";
 import LocationsNavigator from "./LocationsNavigator";
 import { Platform } from "react-native";
+import { FavoriteCharactersScreen } from "../screens";
 
 const BottomTabs = createBottomTabNavigator<BottomTabParamList>();
 
@@ -55,7 +56,7 @@ const BottomTabNavigator = () => {
       />
       <BottomTabs.Screen
         name="FavoritesTab"
-        component={CharactersNavigator}
+        component={FavoriteCharactersScreen}
         options={{
           title: "Favorites",
           tabBarIcon: ({ focused }) => (

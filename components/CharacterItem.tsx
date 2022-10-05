@@ -9,6 +9,7 @@ import React from "react";
 import { Character } from "../types";
 import Card from "./Card";
 import { COLORS } from "../constants/COLORS";
+import { Ionicons } from "@expo/vector-icons";
 
 type CharacterItemProps = {
   item: Character;
@@ -21,7 +22,26 @@ const CharacterItem = ({ item, onSelected }: CharacterItemProps) => {
       <Card style={styles.card}>
         <View style={styles.description}>
           <Text style={styles.title}>{item.name}</Text>
-          <Text style={styles.paragraph}>{item.status}</Text>
+          <View
+            style={{
+              flexDirection: "row",
+              alignItems: "center",
+            }}
+          >
+            {item.status !== "unknown" && (
+              <Ionicons
+                style={{ marginRight: 5 }}
+                name={
+                  item.status === "Alive"
+                    ? "checkmark-circle-sharp"
+                    : "close-circle-sharp"
+                }
+                size={20}
+                color={item.status === "Alive" ? COLORS.accent : COLORS.error}
+              />
+            )}
+            <Text style={styles.paragraph}>{item.status}</Text>
+          </View>
           <Text style={styles.paragraph}>{item.species}</Text>
         </View>
         <Image style={styles.image} source={{ uri: item.image }} />

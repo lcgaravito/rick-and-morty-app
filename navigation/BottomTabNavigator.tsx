@@ -53,6 +53,20 @@ const BottomTabNavigator = () => {
           ),
         }}
       />
+      <BottomTabs.Screen
+        name="FavoritesTab"
+        component={CharactersNavigator}
+        options={{
+          title: "Favorites",
+          tabBarIcon: ({ focused }) => (
+            <Ionicons
+              name={focused ? "heart" : "heart-outline"}
+              size={22}
+              color={COLORS.primary}
+            />
+          ),
+        }}
+      />
     </BottomTabs.Navigator>
   );
 };

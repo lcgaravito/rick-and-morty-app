@@ -12,6 +12,7 @@ import { CharactersStackParamList } from "../navigation";
 import { CharacterDetail } from "../types";
 import { COLORS } from "../constants/COLORS";
 import { Card } from "../components";
+import { Ionicons } from "@expo/vector-icons";
 
 type CharacterDetailScreenProps = NativeStackScreenProps<
   CharactersStackParamList,
@@ -44,12 +45,29 @@ const CharacterDetailScreen = ({ route }: CharacterDetailScreenProps) => {
   return (
     <ScrollView style={styles.container}>
       <Image style={styles.image} source={{ uri: data?.image }} />
-      <Card style={styles.card}>
-        <Text style={styles.title}>{data?.name} </Text>
-      </Card>
+      <Text style={styles.title}>{data?.name} </Text>
       <Card style={styles.card}>
         <Text style={styles.paragraphSubtitle}>Status:</Text>
-        <Text style={styles.paragraph}>{data?.status}</Text>
+        <View
+          style={{
+            flexDirection: "row",
+            alignItems: "center",
+          }}
+        >
+          <Text style={styles.paragraph}>{data?.status}</Text>
+          {data?.status !== "unknown" && (
+            <Ionicons
+              style={{ marginLeft: 10 }}
+              name={
+                data?.status === "Alive"
+                  ? "checkmark-circle-sharp"
+                  : "close-circle-sharp"
+              }
+              size={30}
+              color={data?.status === "Alive" ? COLORS.accent : COLORS.error}
+            />
+          )}
+        </View>
       </Card>
       <Card style={styles.card}>
         <Text style={styles.paragraphSubtitle}>Species:</Text>
@@ -64,7 +82,7 @@ const CharacterDetailScreen = ({ route }: CharacterDetailScreenProps) => {
         <Text style={styles.paragraph}>{data?.location.name}</Text>
       </Card>
       <Card style={styles.card}>
-        <Text style={styles.paragraphSubtitle}>First seen in::</Text>
+        <Text style={styles.paragraphSubtitle}>First seen in:</Text>
         <Text style={styles.paragraph}>{data?.origin.name}</Text>
       </Card>
     </ScrollView>
@@ -76,6 +94,7 @@ export default CharacterDetailScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: COLORS.grayDark,
   },
   loading: {
     flex: 1,
@@ -90,21 +109,28 @@ const styles = StyleSheet.create({
   },
   title: {
     fontFamily: "SpaceMonoBold",
-    fontSize: 20,
+    fontSize: 25,
     color: COLORS.white,
+    margin: 5,
+    padding: 20,
+    textAlign: "center",
   },
   paragraphSubtitle: {
     fontFamily: "SpaceMono",
     color: COLORS.white,
+    fontSize: 15,
   },
   paragraph: {
     fontFamily: "WorkSans",
     color: COLORS.white,
+    fontSize: 22,
   },
   card: {
     flexDirection: "row",
+    alignItems: "center",
     margin: 5,
-    backgroundColor: COLORS.grayLight,
+    marginVertical: 0,
+    backgroundColor: "transparent",
     justifyContent: "space-between",
   },
 });

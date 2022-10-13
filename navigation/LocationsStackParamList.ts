@@ -1,3 +1,3 @@
 export type LocationsStackParamList = {
-  Locatios: undefined;
+  Locations: undefined;
 };

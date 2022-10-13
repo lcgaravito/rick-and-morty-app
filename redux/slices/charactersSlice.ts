@@ -1,10 +1,10 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { Character, CharacterDetail, CharactersResponse } from "../../types";
+import { Character, CharacterDetail, Response } from "../../types";
 import { AppThunk, RootState } from "../store";
 
 interface CharactersState {
   loading: boolean;
-  characters: CharactersResponse;
+  characters: Response<Character>;
   selectedCharacter?: CharacterDetail;
   page: string;
   favoriteCharacters: Character[];
@@ -27,32 +27,35 @@ const initialState: CharactersState = {
 
 export const charactersSlice = createSlice({
   name: "characters",
-  initialState: initialState,
+  initialState,
   reducers: {
-    toggleFavoriteCharacter: (state, action: PayloadAction<Character>) => {
+    toggleFavoriteCharacter: (state, { payload }: PayloadAction<Character>) => {
       if (
         state.favoriteCharacters.find(
-          (character) => character.id === action.payload.id
+          (character) => character.id === payload.id
         )
       ) {
         state.favoriteCharacters = state.favoriteCharacters.filter(
-          (character) => character.id !== action.payload.id
+          (character) => character.id !== payload.id
         );
       } else {
-        state.favoriteCharacters.push(action.payload);
+        state.favoriteCharacters.push(payload);
       }
     },
-    setLoading: (state, action: PayloadAction<boolean>) => {
-      state.loading = action.payload;
+    setLoading: (state, { payload }: PayloadAction<boolean>) => {
+      state.loading = payload;
     },
-    setPage: (state, action: PayloadAction<string>) => {
-      state.page = action.payload;
+    setPage: (state, { payload }: PayloadAction<string>) => {
+      state.page = payload;
     },
-    setCharacters: (state, action: PayloadAction<CharactersResponse>) => {
-      state.characters = action.payload;
+    setCharacters: (state, { payload }: PayloadAction<Response<Character>>) => {
+      state.characters = payload;
     },
-    setSelectedCharacter: (state, action: PayloadAction<CharacterDetail>) => {
-      state.selectedCharacter = action.payload;
+    setSelectedCharacter: (
+      state,
+      { payload }: PayloadAction<CharacterDetail>
+    ) => {
+      state.selectedCharacter = payload;
     },
   },
 });

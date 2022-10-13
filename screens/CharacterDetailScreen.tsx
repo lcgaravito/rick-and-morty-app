@@ -4,6 +4,7 @@ import {
   ScrollView,
   StyleSheet,
   Text,
+  TouchableOpacity,
   View,
 } from "react-native";
 import React, { useEffect } from "react";
@@ -16,6 +17,7 @@ import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import {
   getSelectedCharacter,
   selectCharacters,
+  toggleFavoriteCharacter,
 } from "../redux/slices/charactersSlice";
 
 type CharacterDetailScreenProps = NativeStackScreenProps<
@@ -24,7 +26,11 @@ type CharacterDetailScreenProps = NativeStackScreenProps<
 >;
 
 const CharacterDetailScreen = ({ route }: CharacterDetailScreenProps) => {
-  const { selectedCharacter: data, loading } = useAppSelector(selectCharacters);
+  const {
+    selectedCharacter: data,
+    loading,
+    favoriteCharacters,
+  } = useAppSelector(selectCharacters);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -41,7 +47,23 @@ const CharacterDetailScreen = ({ route }: CharacterDetailScreenProps) => {
   return (
     <ScrollView style={styles.container}>
       <Image style={styles.image} source={{ uri: data?.image }} />
-      <Text style={styles.title}>{data?.name} </Text>
+      <View style={styles.titleContainer}>
+        <Text style={styles.title}>{data?.name} </Text>
+        {data && (
+          <TouchableOpacity
+            style={styles.toggleButton}
+            onPress={() => dispatch(toggleFavoriteCharacter(data))}
+          >
+            <Ionicons
+              name={
+                favoriteCharacters.includes(data) ? "heart" : "heart-outline"
+              }
+              size={40}
+              color={COLORS.primary}
+            />
+          </TouchableOpacity>
+        )}
+      </View>
       <Card style={styles.card}>
         <Text style={styles.paragraphSubtitle}>Status:</Text>
         <View
@@ -103,13 +125,20 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
     marginVertical: 5,
   },
+  titleContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    width: "100%",
+    padding: 20,
+  },
   title: {
     fontFamily: "SpaceMonoBold",
     fontSize: 25,
     color: COLORS.white,
-    margin: 5,
-    padding: 20,
-    textAlign: "center",
+    maxWidth: "80%",
+  },
+  toggleButton: {
+    alignSelf: "center",
   },
   paragraphSubtitle: {
     fontFamily: "SpaceMono",

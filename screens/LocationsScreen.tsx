@@ -12,51 +12,24 @@ import { LocationsStackParamList } from "../navigation";
 import { LocationItem } from "../components";
 import { Location } from "../types";
 import { COLORS } from "../constants/COLORS";
+import { useAppDispatch, useAppSelector } from "../redux/hooks";
+import { getLocations, selectLocations } from "../redux/slices/locationsSlice";
 
 type LocationsScreenProps = NativeStackScreenProps<
   LocationsStackParamList,
-  "Locatios"
+  "Locations"
 >;
 
 const LocationsScreen = ({ navigation }: LocationsScreenProps) => {
-  const [data, setData] = useState<{
-    info: {
-      count: number;
-      pages: number;
-      next?: string | null;
-      prev?: string | null;
-    };
-    results: Location[];
-  }>({
-    info: { count: 0, pages: 0, next: null, prev: null },
-    results: [],
-  });
-  const [loading, setLoading] = useState<boolean>(true);
-  const [page, setPage] = useState<string>("1");
-  const fetchData = async () => {
-    setLoading(true);
-    let url;
-    if (data.info.next) {
-      url = data.info.next;
-      setPage(data.info.next.split("page=")[1]);
-    } else {
-      url = "https://rickandmortyapi.com/api/location";
-      setPage("1");
-    }
-    const resp = await fetch(url);
-    const jsonData = await resp.json();
-    if (jsonData) {
-      setData(jsonData);
-    }
-    setLoading(false);
-  };
+  const { locations: data, loading, page } = useAppSelector(selectLocations);
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
-    fetchData();
+    dispatch(getLocations());
   }, []);
 
   const handleRefresh = () => {
-    fetchData();
+    dispatch(getLocations());
   };
 
   const renderItem: ListRenderItem<Location> = ({ item }) => (

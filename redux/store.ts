@@ -1,9 +1,11 @@
 import { Action, configureStore, ThunkAction } from "@reduxjs/toolkit";
 import charactersSlice from "./slices/charactersSlice";
+import locationsSlice from "./slices/locationsSlice";
 
 const store = configureStore({
   reducer: {
     characters: charactersSlice,
+    locations: locationsSlice,
   },
 });
 

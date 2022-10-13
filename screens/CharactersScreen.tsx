@@ -6,12 +6,17 @@ import {
   Text,
   View,
 } from "react-native";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { CharactersStackParamList } from "../navigation";
 import { CharacterItem } from "../components";
 import { Character } from "../types";
 import { COLORS } from "../constants/COLORS";
+import { useAppDispatch, useAppSelector } from "../redux/hooks";
+import {
+  getCharacters,
+  selectCharacters,
+} from "../redux/slices/charactersSlice";
 
 type CharactersScreenProps = NativeStackScreenProps<
   CharactersStackParamList,
@@ -19,40 +24,11 @@ type CharactersScreenProps = NativeStackScreenProps<
 >;
 
 const CharactersScreen = ({ navigation }: CharactersScreenProps) => {
-  const [data, setData] = useState<{
-    info: {
-      count: number;
-      pages: number;
-      next?: string | null;
-      prev?: string | null;
-    };
-    results: Character[];
-  }>({
-    info: { count: 0, pages: 0, next: null, prev: null },
-    results: [],
-  });
-  const [loading, setLoading] = useState<boolean>(true);
-  const [page, setPage] = useState<string>("1");
-  const fetchData = async () => {
-    setLoading(true);
-    let url;
-    if (data.info.next) {
-      url = data.info.next;
-      setPage(data.info.next.split("page=")[1]);
-    } else {
-      url = "https://rickandmortyapi.com/api/character/";
-      setPage("1");
-    }
-    const resp = await fetch(url);
-    const jsonData = await resp.json();
-    if (jsonData) {
-      setData(jsonData);
-    }
-    setLoading(false);
-  };
+  const { characters: data, page, loading } = useAppSelector(selectCharacters);
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
-    fetchData();
+    dispatch(getCharacters());
   }, []);
 
   const handleSelectedCharacter = (item: Character) => {
@@ -63,7 +39,7 @@ const CharactersScreen = ({ navigation }: CharactersScreenProps) => {
   };
 
   const handleRefresh = () => {
-    fetchData();
+    dispatch(getCharacters());
   };
 
   const renderItem: ListRenderItem<Character> = ({ item }) => (

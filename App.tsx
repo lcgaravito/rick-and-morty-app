@@ -1,8 +1,10 @@
 import { useFonts } from "expo-font";
 import { StatusBar } from "expo-status-bar";
 import { ActivityIndicator, Platform, StyleSheet, View } from "react-native";
+import { Provider } from "react-redux";
 import { COLORS } from "./constants/COLORS";
 import { AppNavigator } from "./navigation";
+import store from "./redux/store";
 
 export default function App() {
   const [loaded] = useFonts({
@@ -19,10 +21,10 @@ export default function App() {
     );
 
   return (
-    <>
+    <Provider store={store}>
       <AppNavigator />
       <StatusBar style={Platform.OS === "ios" ? "light" : "dark"} />
-    </>
+    </Provider>
   );
 }
 

@@ -6,13 +6,17 @@ import {
   Text,
   View,
 } from "react-native";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { CharactersStackParamList } from "../navigation";
-import { CharacterDetail } from "../types";
 import { COLORS } from "../constants/COLORS";
 import { Card } from "../components";
 import { Ionicons } from "@expo/vector-icons";
+import { useAppDispatch, useAppSelector } from "../redux/hooks";
+import {
+  getSelectedCharacter,
+  selectCharacters,
+} from "../redux/slices/charactersSlice";
 
 type CharacterDetailScreenProps = NativeStackScreenProps<
   CharactersStackParamList,
@@ -20,19 +24,11 @@ type CharacterDetailScreenProps = NativeStackScreenProps<
 >;
 
 const CharacterDetailScreen = ({ route }: CharacterDetailScreenProps) => {
-  const [data, setData] = useState<CharacterDetail>();
-  const [loading, setLoading] = useState<boolean>(true);
-  const fetchData = async () => {
-    const resp = await fetch(route.params.url);
-    const jsonData = await resp.json();
-    if (jsonData) {
-      setData(jsonData);
-    }
-    setLoading(false);
-  };
+  const { selectedCharacter: data, loading } = useAppSelector(selectCharacters);
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
-    fetchData();
+    dispatch(getSelectedCharacter(route.params.url));
   }, []);
 
   if (loading)
